@@ -20,11 +20,17 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/my-posts', [BlogPostController::class, 'myPosts'])->name('blog-posts.my-posts');
     Route::get('/my-posts/create', [BlogPostController::class, 'create'])->name('blog-posts.create');
-    Route::get('/my-posts/{blog_post}/edit', [BlogPostController::class, 'edit'])->name('blog-posts.edit');
+    Route::get('/my-posts/{blog_post}/edit', [BlogPostController::class, 'edit'])
+        ->middleware('post.owner')
+        ->name('blog-posts.edit');
     
     Route::post('/blog-posts', [BlogPostController::class, 'store'])->name('blog-posts.store');  
-    Route::put('/blog-posts/{blog_post}', [BlogPostController::class, 'update'])->name('blog-posts.update');
-    Route::delete('/blog-posts/{blog_post}', [BlogPostController::class, 'destroy'])->name('blog-posts.destroy');
+    Route::put('/blog-posts/{blog_post}', [BlogPostController::class, 'update'])
+        ->middleware('post.owner')
+        ->name('blog-posts.update');
+    Route::delete('/blog-posts/{blog_post}', [BlogPostController::class, 'destroy'])
+        ->middleware('post.owner')
+        ->name('blog-posts.destroy');
 });
 
 require __DIR__.'/auth.php';
