@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <nav class="flex items-center space-x-2 text-sm">
+        <div class="flex flex-wrap justify-between items-center gap-2">
+            <nav class="flex items-center text-sm">
                 <a href="{{ route('blog-posts.index') }}" class="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-200">
                     <svg class="mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -38,8 +38,8 @@
         </div>
     </x-slot>
 
-    <div class="py-8 bg-gray-50 min-h-screen">
-        <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="py-2 sm:py-8 bg-gray-50 min-h-screen">
+        <article class="max-w-4xl mx-auto px-2 sm:px-4 lg:px-8">
             @if(session('success'))
                 <div class="mb-8 bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-lg flex items-center">
                     <svg class="flex-shrink-0 mr-2 h-5 w-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -50,7 +50,7 @@
             @endif
 
             <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                <div class="px-8 pt-12 pb-8 bg-gradient-to-b from-white to-gray-50">
+                <div class="px-4 sm:px-8 pt-6 sm:pt-12 pb-8 bg-gradient-to-b from-white to-gray-50">
                     <header class="text-center max-w-3xl mx-auto">
                         <h1 class="text-3xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
                             {{ $blogPost->title }}
@@ -86,9 +86,9 @@
                     </header>
                 </div>
 
-                <div class="px-8 py-12">
+                <div class="px-4 sm:px-8 py-6 sm:py-12">
                     <div class="prose prose-lg prose-blue max-w-none">
-                        <div class="text-gray-800 text-lg">
+                        <div class="text-gray-800 text-lg text-justify">
                             {!! nl2br(e($blogPost->body)) !!}
                         </div>
                     </div>

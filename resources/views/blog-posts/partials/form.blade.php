@@ -10,7 +10,7 @@
 
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
+        <div class="flex flex-wrap justify-between items-center gap-2">
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                     {{ __($heading) }}
@@ -47,7 +47,7 @@
                                 </label>
                                 <input type="text" name="title" id="title" 
                                        value="{{ old('title', $blogPost?->title) }}" 
-                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 @error('title') border-red-500 focus:ring-red-500 focus:border-red-500 @enderror"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors duration-200 @error('title') border-red-500 focus:ring-red-500 focus:border-red-500 @enderror"
                                        placeholder="Enter a compelling title for your blog post"
                                        required>
                                 @error('title')
@@ -66,7 +66,7 @@
                                     <span class="flex items-center">Post Content *</span>
                                 </label>
                                 <textarea name="body" id="body" rows="12" 
-                                          class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 @error('body') border-red-500 focus:ring-red-500 focus:border-red-500 @enderror"
+                                          class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors duration-200 @error('body') border-red-500 focus:ring-red-500 focus:border-red-500 @enderror"
                                           placeholder="Write your blog post content here. Share your thoughts, insights, and ideas..."
                                           required>{{ old('body', $blogPost?->body) }}</textarea>
                                 @error('body')
@@ -90,7 +90,7 @@
                                         @foreach($categories as $category)
                                             <label class="inline-flex items-center p-2 rounded-md hover:bg-white transition-colors duration-200 cursor-pointer">
                                                 <input type="checkbox" name="categories[]" value="{{ $category->id }}" 
-                                                       class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                                       class="rounded border-gray-300 text-red-600 shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50"
                                                        {{ in_array($category->id, old('categories', $selectedCategories)) ? 'checked' : '' }}>
                                                 <span class="ml-3 text-sm text-gray-700 font-medium">{{ $category->name }}</span>
                                             </label>
@@ -109,7 +109,7 @@
                         </div>
 
                         <!-- Form Actions -->
-                        <div class="flex items-center justify-between pt-6 border-t border-gray-200 mt-8">
+                        <div class="flex flex-wrap gap-2 items-center justify-between pt-6 border-t border-gray-200 mt-8">
                             <div class="flex items-center text-sm text-gray-500">
                                 <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>

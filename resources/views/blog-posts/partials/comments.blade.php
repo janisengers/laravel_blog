@@ -1,7 +1,5 @@
-<!-- Comments Section -->
-<div class="px-8 py-8 border-t border-gray-200">
+<div class="px-4 sm:px-8 py-4 sm:py-8 border-t border-gray-200">
     <div class="max-w-3xl mx-auto">
-        <!-- Comments Header -->
         <div class="mb-8">
             <div class="flex items-center justify-between">
                 <h3 class="text-2xl font-bold text-gray-900">Comments</h3>
