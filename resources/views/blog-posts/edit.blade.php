@@ -1,0 +1,1 @@
+@include('blog-posts.partials.form', ['blogPost' => $blogPost, 'categories' => $categories]) 
