@@ -25,33 +25,39 @@ class BlogPostController extends Controller
      */
     public function ajaxList(Request $request): \Illuminate\Http\JsonResponse
     {
-        $query = BlogPost::with(['user', 'categories'])->withCount(['comments']);
-        
+        $baseQuery = BlogPost::query();
+
         if ($request->has('search') && !empty($request->search)) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
+            $baseQuery->where(function($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('body', 'like', "%{$search}%");
+                ->orWhere('body', 'like', "%{$search}%");
             });
         }
-        
+
         if ($request->has('categories') && !empty($request->categories)) {
             $categories = is_array($request->categories) ? $request->categories : [$request->categories];
-            $query->whereHas('categories', function($q) use ($categories) {
+            $baseQuery->whereHas('categories', function($q) use ($categories) {
                 $q->whereIn('categories.id', $categories);
             });
         }
-        
+
         $page = max(1, (int) $request->get('page', 1));
-        $blogPosts = $query->latest()->paginate(8, ['*'], 'page', $page);
-        
-        $blogPosts->getCollection()->transform(function ($post) {
-            $post->append(['formatted_created_at', 'time_ago']);
-            $post->url = route('blog-posts.show', $post->id);
-            return $post;
-        });
-        
-        return response()->json($blogPosts);
+        $ids = $baseQuery->latest('blog_posts.id')->paginate(8, ['blog_posts.id'], 'page', $page);
+
+        $posts = BlogPost::with(['user', 'categories'])->withCount('comments')
+            ->whereIn('id', $ids->pluck('id'))
+            ->get()
+            ->keyBy('id');
+
+        $ids->setCollection($ids->getCollection()->map(function ($post) use ($posts) {
+            $fullPost = $posts[$post->id];
+            $fullPost->append(['formatted_created_at', 'time_ago']);
+            $fullPost->url = route('blog-posts.show', $post->id);
+            return $fullPost;
+        }));
+
+        return response()->json($ids);
     }
 
     /**

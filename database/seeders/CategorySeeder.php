@@ -15,26 +15,28 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            'Technology',
-            'Design',
-            'Business',
-            'Health',
-            'Travel',
-            'Food',
-            'Sports',
-            'Entertainment',
-            'Science',
-            'Politics',
-            'Lifestyle',
-            'Finance',
-            'News'
+            'technology' => 'Technology',
+            'design' => 'Design',
+            'business' => 'Business',
+            'health' => 'Health',
+            'traveling' => 'Traveling',
+            'food' => 'Food',
+            'sports' => 'Sports',
+            'entertainment' => 'Entertainment',
+            'science' => 'Science',
+            'politics' => 'Politics',
+            'lifestyle' => 'Lifestyle',
+            'finance' => 'Finance',
+            'news' => 'News'
         ];
 
-        foreach ($categories as $categoryName) {
-            Category::create([
-                'name' => $categoryName,
-                'slug' => Str::slug($categoryName),
-            ]);
+        foreach ($categories as $slug => $categoryName) {
+            Category::updateOrCreate(
+                ['slug' => $slug],
+                ['name' => $categoryName]
+            );
         }
+
+        Category::whereNotIn('slug', array_keys($categories))->delete();
     }
 }

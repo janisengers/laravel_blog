@@ -40,6 +40,8 @@ export const postsStore = () => ({
         
         async loadPosts(options = {}) {
             const { replace = true, page = null } = options;
+
+            if (this.loading) return;
             
             this.setLoading(true);
             
